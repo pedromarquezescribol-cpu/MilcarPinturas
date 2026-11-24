@@ -18,3 +18,53 @@
 		}
 	}
 }
+
+/* Transiciones nativas entre páginas y desplegables, solo si el usuario
+   no pidió reducir el movimiento. Sin JS y sin dependencias. */
+@media (prefers-reduced-motion: no-preference) {
+	@view-transition {
+		navigation: auto;
+	}
+
+	::view-transition-old(root) {
+		animation: page-out 200ms ease both;
+	}
+
+	::view-transition-new(root) {
+		animation: page-in 240ms ease both;
+	}
+
+	@keyframes page-out {
+		to {
+			opacity: 0;
+			transform: translateY(-6px);
+		}
+	}
+
+	@keyframes page-in {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+	}
+
+	/* Sin interpolate-size el navegador se queda con el comportamiento
+	   nativo de <details>. El @supports evita dejar el contenido a altura 0. */
+	@supports (interpolate-size: allow-keywords) {
+		details[data-smooth] {
+			interpolate-size: allow-keywords;
+
+			&::details-content {
+				height: 0;
+				overflow: clip;
+				transition:
+					height 200ms cubic-bezier(0.4, 0, 0.2, 1),
+					content-visibility 200ms allow-discrete;
+			}
+
+			&[open]::details-content {
+				height: auto;
+			}
+		}
+	}
+}

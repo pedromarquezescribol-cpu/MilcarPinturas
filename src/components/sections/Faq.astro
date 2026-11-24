@@ -15,7 +15,7 @@ const { items } = Astro.props;
 		<div class="mt-8 grid gap-3">
 			{
 				items.map((item) => (
-					<details class="group rounded-2xl border-2 border-brand-soft bg-brand-soft/20 p-5 [&::-webkit-details-marker]:hidden">
+					<details data-smooth class="group rounded-2xl border-2 border-brand-soft bg-brand-soft/20 p-5 [&::-webkit-details-marker]:hidden">
 						<summary class="cursor-pointer list-none text-lg font-black focus:outline-none">
 							{item.question}
 						</summary>
