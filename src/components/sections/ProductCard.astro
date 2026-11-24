@@ -1,0 +1,60 @@
+---
+import type { TextileProduct } from '../../types/content';
+import Badge from '../ui/Badge.astro';
+import Photo from '../ui/Photo.astro';
+
+interface Props {
+	product: TextileProduct;
+	featured?: boolean;
+}
+
+const { product, featured = false } = Astro.props;
+---
+
+<article
+	id={product.id}
+	class:list={[
+		'scroll-mt-40 overflow-hidden rounded-3xl border-2 bg-white shadow-md',
+		featured ? 'border-brand lg:grid lg:grid-cols-2' : 'border-brand/20',
+	]}
+>
+	<div class:list={['overflow-hidden', featured ? 'aspect-[4/3] lg:aspect-auto lg:h-full' : 'aspect-[16/9]']}>
+		<Photo
+			src={product.image}
+			alt={product.alt}
+			aspect={featured ? '4/3' : '16/9'}
+			class:list={['h-full', featured && 'lg:h-full']}
+		/>
+	</div>
+
+	<div class="p-6">
+		<div class="flex flex-wrap gap-2">
+			<Badge variant={featured ? 'deep' : 'soft'}>{product.tag}</Badge>
+			<Badge variant="muted">{product.presentation}</Badge>
+			{product.badges.map((badge) => <Badge variant="muted">{badge}</Badge>)}
+		</div>
+
+		<h3 class="mt-4 text-2xl font-black">{product.name}</h3>
+		<p class="mt-2 leading-7 text-neutral-600">{product.description}</p>
+
+		<details class="group mt-5 rounded-2xl bg-brand-soft/40 p-4">
+			<summary class="cursor-pointer list-none text-sm font-black text-brand-deep focus:outline-none [&::-webkit-details-marker]:hidden">
+				<span class="group-open:hidden">Cómo se usa ▾</span>
+				<span class="hidden group-open:inline">Ocultar pasos ▴</span>
+			</summary>
+			<ol class="mt-3 grid gap-2 border-t-2 border-brand-soft pt-3 text-sm leading-6 text-neutral-700">
+				{product.steps.map((step, index) => (
+					<li class="flex gap-2">
+						<span class="font-black text-brand-deep">{index + 1}.</span>
+						<span>{step}</span>
+					</li>
+				))}
+			</ol>
+			{product.tip && (
+				<p class="mt-3 rounded-xl bg-white p-3 text-xs leading-5 text-neutral-600">
+					<strong>Consejo:</strong> {product.tip}
+				</p>
+			)}
+		</details>
+	</div>
+</article>

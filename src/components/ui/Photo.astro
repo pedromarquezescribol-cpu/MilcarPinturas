@@ -1,0 +1,36 @@
+---
+interface Props {
+	src: string;
+	alt: string;
+	aspect?: 'square' | 'video' | '4/3' | '4/5' | '16/9' | '16/10';
+	frame?: 'none' | 'white' | 'glass' | 'card';
+	priority?: boolean;
+	class?: string;
+}
+
+const { src, alt, aspect = '4/3', frame = 'none', priority = false, class: className = '' } = Astro.props;
+
+const aspects: Record<NonNullable<Props['aspect']>, string> = {
+	square: 'aspect-square',
+	video: 'aspect-video',
+	'4/3': 'aspect-[4/3]',
+	'4/5': 'aspect-[4/5]',
+	'16/9': 'aspect-[16/9]',
+	'16/10': 'aspect-[16/10]',
+};
+
+const frames: Record<NonNullable<Props['frame']>, string> = {
+	none: '',
+	white: 'rounded-[2rem] border-8 border-white shadow-2xl',
+	glass: 'rounded-[2rem] border-8 border-white/20 shadow-2xl',
+	card: 'rounded-2xl',
+};
+---
+
+<img
+	src={src}
+	alt={alt}
+	loading={priority ? undefined : 'lazy'}
+	fetchpriority={priority ? 'high' : undefined}
+	class:list={['w-full object-cover', aspects[aspect], frames[frame], className]}
+/>

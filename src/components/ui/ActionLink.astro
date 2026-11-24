@@ -1,0 +1,30 @@
+---
+import type { ActionVariant } from '../../types/content';
+
+interface Props {
+	href: string;
+	variant?: ActionVariant;
+	class?: string;
+}
+
+const { href, variant = 'dark', class: className = '' } = Astro.props;
+
+/** Botones/enlaces de acción con apariencia centralizada. */
+const variants: Record<ActionVariant, string> = {
+	dark: 'bg-neutral-900 text-white shadow-lg hover:bg-neutral-800 focus-visible:ring-brand/50',
+	brand: 'bg-brand text-neutral-900 shadow-md hover:brightness-95 focus-visible:ring-brand-deep/40',
+	deep: 'bg-brand-deep text-white shadow-md hover:brightness-95 focus-visible:ring-brand/50',
+	light: 'bg-white text-brand-deep shadow-md hover:brightness-95 focus-visible:ring-white',
+};
+---
+
+<a
+	href={href}
+	class:list={[
+		'inline-flex rounded-full px-6 py-3 font-extrabold transition focus:outline-none focus-visible:ring-4',
+		variants[variant],
+		className,
+	]}
+>
+	<slot />
+</a>

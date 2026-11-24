@@ -1,0 +1,120 @@
+---
+import { getPlayableVideos, getThumbnailUrl } from '../../lib/youtube';
+import type { DemoVideo } from '../../types/content';
+import Badge from '../ui/Badge.astro';
+
+interface Props {
+	videos: DemoVideo[];
+}
+
+const { videos } = Astro.props;
+const playableVideos = getPlayableVideos(videos);
+---
+
+<section id="videos" class="scroll-mt-36 relative overflow-hidden bg-neutral-900 py-16 text-white sm:py-20">
+	<div class="absolute -right-20 top-0 h-72 w-72 rounded-full bg-brand/20 blur-3xl" aria-hidden="true"></div>
+
+	<div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8" data-video-carousel>
+		<div>
+			<Badge variant="brand">Aprende viendo</Badge>
+			<h2 class="mt-4 text-3xl font-black tracking-tight sm:text-4xl">Míralo en acción</h2>
+			<p class="mt-2 text-neutral-300">Haz clic en un video y míralo aquí mismo.</p>
+		</div>
+
+		<!-- Las flechas van a los lados del track, como un carrusel clásico. -->
+		<div class="relative mt-8">
+			<button
+				type="button"
+				data-carousel-prev
+				aria-label="Ver videos anteriores"
+				class="absolute left-0 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-neutral-900/90 text-white shadow-xl backdrop-blur transition hover:border-brand hover:bg-brand hover:text-neutral-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:-left-4 sm:size-12"
+			>
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+					<path d="m15 18-6-6 6-6" />
+				</svg>
+			</button>
+
+			<div
+				class="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+				data-video-track
+			>
+				{
+					playableVideos.map((video) => (
+						<button
+							type="button"
+							data-video-id={video.id}
+							data-video-title={video.title}
+							class="group w-[85vw] max-w-sm shrink-0 snap-start overflow-hidden rounded-3xl bg-white text-left text-neutral-900 shadow-xl transition motion-safe:hover:-translate-y-1 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand sm:w-80 lg:w-[calc((100%_-_2.5rem)/3)]"
+						>
+							<div class="relative aspect-video overflow-hidden bg-neutral-800">
+								<img
+									src={getThumbnailUrl(video.id)}
+									alt={`Vista previa: ${video.title}`}
+									class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+									loading="lazy"
+								/>
+								<span class="absolute bottom-3 left-3 rounded-full bg-brand px-3 py-1 text-xs font-black text-neutral-900 shadow">
+									Ver video
+								</span>
+							</div>
+							<div class="p-5">
+								<Badge variant="soft">{video.badge}</Badge>
+								<h3 class="mt-3 text-lg font-black leading-snug">{video.title}</h3>
+								<p class="mt-1 text-sm text-neutral-600">{video.description}</p>
+							</div>
+						</button>
+					))
+				}
+			</div>
+
+			<button
+				type="button"
+				data-carousel-next
+				aria-label="Ver videos siguientes"
+				class="absolute right-0 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-neutral-900/90 text-white shadow-xl backdrop-blur transition hover:border-brand hover:bg-brand hover:text-neutral-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:-right-4 sm:size-12"
+			>
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="size-5" aria-hidden="true">
+					<path d="m9 18 6-6-6-6" />
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<div
+		class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/85 p-4"
+		data-video-modal
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="video-modal-title"
+		tabindex="-1"
+	>
+		<div class="w-full max-w-4xl overflow-hidden rounded-3xl bg-neutral-900 shadow-2xl">
+			<div class="flex items-center justify-between gap-4 bg-neutral-900 px-5 py-4">
+				<h3 id="video-modal-title" data-video-modal-title class="truncate text-base font-black text-white sm:text-lg">
+					Video
+				</h3>
+				<button
+					type="button"
+					data-video-close
+					class="shrink-0 rounded-full bg-white/10 px-4 py-2 text-sm font-black text-white transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+				>
+					Cerrar
+				</button>
+			</div>
+			<div class="aspect-video w-full bg-black">
+				<iframe
+					data-video-frame
+					class="h-full w-full"
+					src=""
+					title="Video de YouTube"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowfullscreen
+				></iframe>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import '../../scripts/video-carousel';
+</script>

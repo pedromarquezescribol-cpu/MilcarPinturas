@@ -1,0 +1,22 @@
+---
+import type { NavLink } from '../../types/content';
+
+interface Props {
+	links: NavLink[];
+}
+
+const { links } = Astro.props;
+---
+
+<nav
+	class="sticky top-[70px] z-40 border-y-2 border-brand/30 bg-white/95 backdrop-blur"
+	aria-label="Secciones del catálogo"
+>
+	<div class="mx-auto flex max-w-7xl gap-5 overflow-x-auto px-4 py-3 text-sm font-extrabold text-neutral-700 sm:px-6 lg:px-8">
+		{links.map((link) => (
+			<a class="whitespace-nowrap transition hover:text-brand-deep" href={link.href}>
+				{link.label}
+			</a>
+		))}
+	</div>
+</nav>

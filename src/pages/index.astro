@@ -1,0 +1,26 @@
+---
+import CategoryCards from '../components/sections/CategoryCards.astro';
+import HomeHero from '../components/sections/HomeHero.astro';
+import StepCards from '../components/sections/StepCards.astro';
+import VideoCarousel from '../components/sections/VideoCarousel.astro';
+import { seo } from '../config/site';
+import { homeCategories, steps } from '../data/content';
+import { demoVideos } from '../data/videos';
+import Layout from '../layouts/Layout.astro';
+---
+
+<!-- Punto de composición: elige secciones y les pasa datos. -->
+<Layout title={seo.home.title} description={seo.home.description}>
+	<HomeHero />
+
+	<VideoCarousel videos={demoVideos} />
+
+	<CategoryCards
+		id="categorias"
+		categories={homeCategories}
+		title="Dos categorías, una sola marca."
+		sectionClass="bg-white py-16 sm:py-24"
+	/>
+
+	<StepCards steps={steps} title="Así de fácil: prepara, pinta y fija." />
+</Layout>

@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+	--font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+	--color-brand: #FF9B02;
+	--color-brand-deep: #FD6B00;
+	--color-brand-soft: #FFF1DC;
+}
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+	}
+}

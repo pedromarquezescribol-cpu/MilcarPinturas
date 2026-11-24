@@ -1,0 +1,30 @@
+---
+import type { BadgeVariant } from '../../types/content';
+
+interface Props {
+	variant?: BadgeVariant;
+	class?: string;
+}
+
+const { variant = 'soft', class: className = '' } = Astro.props;
+
+/** Único lugar donde se definen los estilos de las etiquetas. */
+const variants: Record<BadgeVariant, string> = {
+	brand: 'bg-brand px-3 py-1 text-[11px] text-neutral-900',
+	deep: 'bg-brand-deep px-3 py-1 text-[11px] text-white',
+	dark: 'bg-neutral-900 px-3 py-1 text-xs text-white',
+	light: 'bg-white px-3 py-1 text-[11px] text-brand-deep',
+	soft: 'bg-brand-soft px-3 py-1 text-[11px] text-brand-deep',
+	muted: 'bg-neutral-100 px-3 py-1 text-[11px] text-neutral-600',
+};
+---
+
+<span
+	class:list={[
+		'inline-block rounded-full font-black uppercase tracking-widest',
+		variants[variant],
+		className,
+	]}
+>
+	<slot />
+</span>

@@ -1,0 +1,82 @@
+---
+import { heroCarousel, SITE } from '../../config/site';
+import { heroSlides } from '../../data/images';
+import ActionLink from '../ui/ActionLink.astro';
+import Badge from '../ui/Badge.astro';
+---
+
+<section
+	class="relative isolate min-h-[calc(100svh-4.5rem)] overflow-hidden bg-neutral-900 text-white"
+	data-hero-carousel
+	data-hero-interval={heroCarousel.intervalMs}
+	aria-roledescription="carrusel"
+	aria-label="Portada de Pinterex"
+>
+	<div class="absolute inset-0 -z-20" aria-hidden="true">
+		{
+			heroSlides.map((slide, index) => (
+				<img
+					src={slide.src}
+					alt={slide.alt}
+					loading={index === 0 ? undefined : 'lazy'}
+					fetchpriority={index === 0 ? 'high' : undefined}
+					aria-hidden={index === 0 ? undefined : 'true'}
+					data-hero-slide
+					class:list={[
+						'absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 ease-in-out motion-reduce:transition-none',
+						index === 0 && 'opacity-100',
+					]}
+				/>
+			))
+		}
+	</div>
+
+	<div class="absolute inset-0 -z-10 bg-gradient-to-r from-neutral-950/90 via-neutral-900/60 to-neutral-900/10" aria-hidden="true"></div>
+	<div class="absolute inset-0 -z-10 bg-gradient-to-t from-neutral-950/70 via-transparent to-transparent" aria-hidden="true"></div>
+
+	<div class="relative mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-6xl flex-col justify-center px-4 py-20 sm:px-6 lg:px-8">
+		<div class="max-w-2xl">
+			<Badge variant="brand">Pinturas {SITE.name}</Badge>
+
+			<h1 class="mt-6 text-4xl font-black leading-[1.05] tracking-tight drop-shadow-lg sm:text-6xl lg:text-7xl">
+				Color para todo lo que <span class="text-brand">imaginas.</span>
+			</h1>
+			<p class="mt-6 max-w-xl text-lg leading-8 text-white/85 drop-shadow">
+				Pinturas para tela y para otras superficies. Elige, aplica y crea.
+			</p>
+			<div class="mt-8 flex flex-wrap gap-3">
+				<ActionLink href={SITE.routes.products} variant="brand">Ver productos</ActionLink>
+				<ActionLink href="#videos" variant="light">Ver videos</ActionLink>
+			</div>
+		</div>
+	</div>
+
+	<div class="absolute bottom-6 left-4 right-4 flex items-center justify-between gap-4 sm:bottom-8 sm:left-6 sm:right-6 lg:left-8 lg:right-8">
+		<div class="flex items-center gap-1.5" role="group" aria-label="Controles del carrusel">
+			{
+				heroSlides.map((slide, index) => (
+					<button
+						type="button"
+						data-hero-dot
+						aria-label={`Ver imagen ${index + 1} de ${heroSlides.length}: ${slide.alt}`}
+						aria-current={index === 0 ? 'true' : 'false'}
+						class:list={[
+							'h-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900',
+							index === 0 ? 'w-8 bg-white' : 'w-2 bg-white/50 hover:bg-white/80',
+						]}
+					/>
+				))
+			}
+		</div>
+
+		<p class="flex items-center gap-1 text-xs font-black tracking-widest text-white/80">
+			<span data-hero-status>01</span>
+			<span aria-hidden="true">/ {String(heroSlides.length).padStart(2, '0')}</span>
+			<span class="sr-only">de {heroSlides.length} imágenes</span>
+		</p>
+	</div>
+</section>
+
+<script>
+	import '../../scripts/hero-carousel';
+</script>

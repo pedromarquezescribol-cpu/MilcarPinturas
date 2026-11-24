@@ -1,0 +1,42 @@
+---
+import { media } from '../../data/images';
+import ActionLink from '../ui/ActionLink.astro';
+import Badge from '../ui/Badge.astro';
+import Photo from '../ui/Photo.astro';
+---
+
+<section class="relative overflow-hidden bg-brand-soft/60">
+	<div class="absolute -left-24 -top-28 h-96 w-96 rounded-full bg-brand/40 blur-3xl" aria-hidden="true"></div>
+	<div class="absolute -bottom-32 right-0 h-96 w-96 rounded-full bg-brand-deep/20 blur-3xl" aria-hidden="true"></div>
+
+	<div class="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-20">
+		<div>
+			<Badge variant="dark">Línea PINTEREX</Badge>
+
+			<h1 class="mt-5 text-4xl font-black leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+				Pinturas para <span class="text-brand-deep">crear sobre tela.</span>
+			</h1>
+			<p class="mt-6 max-w-xl text-lg leading-8 text-neutral-700">
+				Cinco productos. Cada uno con una función clara. Así de simple.
+			</p>
+			<div class="mt-8 flex flex-wrap gap-3">
+				<ActionLink href="#productos">Ver productos</ActionLink>
+				<ActionLink href="#videos" variant="deep">Ver videos</ActionLink>
+			</div>
+		</div>
+
+		<div class="relative">
+			<Photo
+				src={media.customShirt}
+				alt="Prenda personalizada con pintura textil PINTEREX"
+				aspect="4/3"
+				frame="white"
+				priority
+			/>
+			<div class="absolute -bottom-5 -left-3 rounded-2xl bg-brand px-4 py-3 shadow-xl sm:-left-6">
+				<p class="text-xs font-black uppercase tracking-widest text-neutral-900">Para empezar</p>
+				<p class="text-lg font-black leading-none text-neutral-900">Prepara · Pinta · Fija</p>
+			</div>
+		</div>
+	</div>
+</section>

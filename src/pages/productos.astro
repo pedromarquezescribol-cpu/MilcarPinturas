@@ -1,0 +1,35 @@
+---
+import CatalogNav from '../components/sections/CatalogNav.astro';
+import Faq from '../components/sections/Faq.astro';
+import ProductGrid from '../components/sections/ProductGrid.astro';
+import ProductHero from '../components/sections/ProductHero.astro';
+import PvaSection from '../components/sections/PvaSection.astro';
+import StepCards from '../components/sections/StepCards.astro';
+import VideoCarousel from '../components/sections/VideoCarousel.astro';
+import { catalogSections, seo } from '../config/site';
+import { faqs, pvaIntro, steps } from '../data/content';
+import { demoVideos } from '../data/videos';
+import { getPvaProducts, getTextileProducts } from '../lib/catalog';
+import Layout from '../layouts/Layout.astro';
+---
+
+<!-- Punto de composición: orden de secciones, sin estilos ni reglas de negocio. -->
+<Layout title={seo.products.title} description={seo.products.description}>
+	<ProductHero />
+	<CatalogNav links={catalogSections} />
+
+	<ProductGrid products={getTextileProducts()} />
+
+	<StepCards
+		id="como-empezar"
+		steps={steps}
+		title="Cómo empezar"
+		note="Revisa siempre las indicaciones del envase."
+		sectionClass="bg-brand-soft/50 py-14 sm:py-16"
+	/>
+
+	<PvaSection intro={pvaIntro} products={getPvaProducts()} />
+
+	<VideoCarousel videos={demoVideos} />
+	<Faq items={faqs} />
+</Layout>

@@ -1,0 +1,60 @@
+---
+import type { CategoryCard } from '../../types/content';
+import Photo from '../ui/Photo.astro';
+
+interface Props {
+	id: string;
+	categories: CategoryCard[];
+	title: string;
+	sectionClass?: string;
+}
+
+const { id, categories, title, sectionClass = 'bg-white py-16 sm:py-20' } = Astro.props;
+---
+
+<section id={id} class:list={['scroll-mt-40', sectionClass]}>
+	<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+		<h2 class="text-3xl font-black tracking-tight sm:text-4xl">{title}</h2>
+
+		<div class="mt-8 grid gap-6 md:grid-cols-2">
+			{
+				categories.map((category) => {
+					const isBrand = category.accent === 'brand';
+
+					return (
+						<a
+							href={category.href}
+							class:list={[
+								'group overflow-hidden rounded-3xl border-2 bg-white transition motion-safe:hover:-translate-y-1 focus:outline-none focus-visible:ring-4',
+								isBrand
+									? 'border-brand/40 focus-visible:ring-brand/40'
+									: 'border-brand-deep/30 focus-visible:ring-brand-deep/40',
+							]}
+						>
+							<div class="aspect-[16/9] overflow-hidden">
+								<Photo
+									src={category.image}
+									alt={category.alt}
+									aspect="16/9"
+									class="h-full transition duration-500 group-hover:scale-105"
+								/>
+							</div>
+							<div class="p-6">
+								<h3 class="text-2xl font-black">{category.title}</h3>
+								<p class="mt-2 leading-7 text-neutral-600">{category.description}</p>
+								<span
+									class:list={[
+										'mt-5 inline-block rounded-full px-5 py-2 text-sm font-extrabold text-white',
+										isBrand ? 'bg-neutral-900' : 'bg-brand-deep',
+									]}
+								>
+									{category.cta}
+								</span>
+							</div>
+						</a>
+					);
+				})
+			}
+		</div>
+	</div>
+</section>

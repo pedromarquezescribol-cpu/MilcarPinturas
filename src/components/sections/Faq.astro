@@ -1,0 +1,30 @@
+---
+import type { FaqItem } from '../../types/content';
+
+interface Props {
+	items: FaqItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<section id="preguntas" class="scroll-mt-40 bg-white py-16 sm:py-20">
+	<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+		<h2 class="text-3xl font-black tracking-tight sm:text-4xl">Preguntas frecuentes</h2>
+
+		<div class="mt-8 grid gap-3">
+			{
+				items.map((item) => (
+					<details class="group rounded-2xl border-2 border-brand-soft bg-brand-soft/20 p-5 [&::-webkit-details-marker]:hidden">
+						<summary class="cursor-pointer list-none text-lg font-black focus:outline-none">
+							{item.question}
+						</summary>
+						<p class="mt-3 border-t-2 border-brand-soft pt-3 leading-7 text-neutral-600">
+							{item.answer}
+						</p>
+					</details>
+				))
+			}
+		</div>
+	</div>
+</section>
