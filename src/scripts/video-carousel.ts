@@ -126,6 +126,28 @@ class VideoModal {
 	}
 }
 
+/** Distancia mínima para considerar que el usuario deslizó en vez de tocar. */
+const DRAG_THRESHOLD_PX = 10;
+
+/**
+ * Abre el modal solo ante un clic intencional sobre el botón de play.
+ * Un arrastre con mouse o dedo (típico al recorrer el carrusel) no cuenta.
+ */
+function bindPlayButton(trigger: VideoTrigger, activate: () => void): void {
+	let start: { x: number; y: number } | null = null;
+
+	trigger.addEventListener('pointerdown', (event) => {
+		start = { x: event.clientX, y: event.clientY };
+	});
+
+	trigger.addEventListener('click', (event) => {
+		const dragged =
+			start !== null && Math.hypot(event.clientX - start.x, event.clientY - start.y) > DRAG_THRESHOLD_PX;
+		start = null;
+		if (!dragged) activate();
+	});
+}
+
 /** Punto de composición: conecta el DOM con los dos colaboradores. */
 function initVideoCarousel(): void {
 	const root = document.querySelector<HTMLElement>(SELECTORS.root);
@@ -149,7 +171,7 @@ function initVideoCarousel(): void {
 	);
 
 	root.querySelectorAll<VideoTrigger>(SELECTORS.trigger).forEach((trigger) => {
-		trigger.addEventListener('click', () => videoModal.open(trigger));
+		bindPlayButton(trigger, () => videoModal.open(trigger));
 	});
 }
 
