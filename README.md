@@ -66,6 +66,8 @@ por props. Las secciones no importan archivos de datos.
 | --- | --- |
 | Colores o tipografía | `src/styles/global.css` |
 | Marca, empresa matriz, enlaces o SEO | `src/config/site.ts` |
+| Título que se ve en la pestaña | `src/config/site.ts` (`SITE.browserTitle`) |
+| Icono de la pestaña (favicon) | `public/M.webp` (lo referencia `src/layouts/Layout.astro`) |
 | Velocidad del carrusel de portada | `src/config/site.ts` (`heroCarousel.intervalMs`) |
 | Una imagen, o reutilizar la misma en varias partes | `src/data/images.ts` (objeto `media`) |
 | Texto de los productos | `src/data/products.ts` |

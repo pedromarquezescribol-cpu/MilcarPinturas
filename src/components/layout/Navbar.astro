@@ -24,13 +24,13 @@ const currentPath = Astro.url.pathname;
 				alt={SITE.parent}
 				class="h-8 w-auto shrink-0 sm:h-9"
 			/>
-			<span class="h-7 w-px shrink-0 bg-brand-deep/40 sm:h-8" aria-hidden="true"></span>
+			<span class="hidden h-6 w-px shrink-0 bg-brand-deep/40 sm:block sm:h-8" aria-hidden="true"></span>
 			<img
 				src={pinterexLogo.src}
 				width={pinterexLogo.width}
 				height={pinterexLogo.height}
 				alt={SITE.name}
-				class="h-10 w-auto shrink-0 drop-shadow-sm sm:h-12"
+				class="hidden h-9 w-auto shrink-0 drop-shadow-sm sm:block sm:h-12"
 			/>
 		</a>
 
@@ -45,7 +45,7 @@ const currentPath = Astro.url.pathname;
 								href={href}
 								aria-current={isActive ? 'page' : undefined}
 								class:list={[
-									'block rounded-full px-4 py-2 text-sm font-extrabold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-black/60 sm:text-base',
+									'block rounded-full px-3 py-2 text-xs font-extrabold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-black/60 sm:px-4 sm:text-base',
 									isActive
 										? 'bg-neutral-900 text-white shadow-md'
 										: 'text-neutral-900/80 hover:bg-white/50 hover:text-neutral-900',

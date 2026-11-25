@@ -6,6 +6,8 @@ export const SITE = {
 	name: 'Pinterex',
 	/** Empresa matriz, dueña de la marca. */
 	parent: 'Milcar',
+	/** Nombre que muestra la pestaña del navegador. */
+	browserTitle: 'milcarpinturas',
 	lang: 'es',
 	year: 2026,
 	routes: {
@@ -53,15 +55,15 @@ export const footerGroups: FooterGroup[] = [
 
 export const seo: Record<'default' | 'home' | 'products', SeoMeta> = {
 	default: {
-		title: SITE.name,
+		title: SITE.browserTitle,
 		description: 'Pinturas para tela PINTEREX y pinturas PVA para papel, cartón y madera.',
 	},
 	home: {
-		title: `${SITE.name} | Pinturas para tela y PVA`,
+		title: SITE.browserTitle,
 		description: 'Pinturas PINTEREX para tela y pinturas PVA para papel, cartón y madera. Simple de usar.',
 	},
 	products: {
-		title: `Productos | ${SITE.name}`,
+		title: `Productos | ${SITE.browserTitle}`,
 		description: 'Cinco productos PINTEREX para tela y pinturas PVA para otras superficies. Fácil de elegir y usar.',
 	},
 };
